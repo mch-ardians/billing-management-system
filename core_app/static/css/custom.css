@@ -1,0 +1,62 @@
+.bg-main, .btn-main {
+    background-color: #1e8a97;
+    color: white;
+}
+
+.sidebar-link:hover {
+    color: #dcef95 !important;
+}
+
+.text-main {
+    color: #1e8a97;
+}
+
+.bg-image {
+    background-image: url('../img/icons/header-image.svg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.login {
+    min-height: 100vh;
+    background-color: white;
+  }
+  
+.btn-login {
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+}
+
+.side-predesc {
+    height: fit-content;
+}
+
+#upload-button {
+    padding: 6px;
+    color: #fff;
+    background: #1e8a97;
+    border: 2px solid #fff;
+    cursor: pointer;
+    outline: 0;
+}
+
+form.form {
+    padding: 5px;
+    background: #fff;
+}
+
+.print-title {
+    font-size: 60px;
+}
+
+.fs-3, .fs-4 {
+    margin: 0 !important;
+    padding: 0;
+}
+
+.fw-bolder.text-capitalize.fs-3.divider {
+    margin-top: 10px !important;
+    /* border: 10px yellow solid; */
+}

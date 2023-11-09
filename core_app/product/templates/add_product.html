@@ -1,0 +1,64 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block head_lib %}
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock head_lib %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <div class="col-12 d-none d-sm-block">
+            <h3><strong>Add Produk</strong></h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Library</a></li>
+                    <li class="breadcrumb-item active">Data</li>
+                </ol>
+            </nav>
+            <hr style="border: 2px solid #1e8a97;">
+        </div>
+        <div class="row">
+            <div class="col-12 col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="form_add_product">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="mb-3 col-md-10">
+                                    {{ product_nama_form.label_tag }}
+                                    {{ product_nama_form }}
+                                    <div id="product_nama_validation" class="text-danger"></div>
+                                </div>
+                                <div class="mb-3 col-md-7">
+                                    {{ product_type_form.label_tag }}
+                                    {{ product_type_form }}
+                                    <div id="product_type_validation" class="text-danger"></div>
+                                </div>
+                                <div class="mb-3 col-md-7">
+                                    {{ product_client_form.label_tag }}
+                                    {{ product_client_form }}
+                                    <div id="product_client_validation" class="text-danger"></div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end gap-3">
+                                <button class="btn btn-outline-success" id="btn_cancel">Cancel</button>
+                                <button class="btn btn-main" id="btn_submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block body_lib %}
+    <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
+    <script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
+    <script src="{% static 'js/add_product.js' %}"></script>
+{% endblock body_lib %}

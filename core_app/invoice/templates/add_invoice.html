@@ -1,0 +1,118 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block head_lib %}
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock head_lib %}
+
+{% block content %}
+<div class="container-fluid p-0">
+    <div class="col-12 d-none d-sm-block">
+        <h3><strong>Add Invoice</strong></h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Library</a></li>
+                <li class="breadcrumb-item active">Data</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-12 col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <form id="form_add_invoice">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="mb-3 col-md-8">
+                                {{ invoice_no_invoice_form.label_tag }}
+                                {{ invoice_no_invoice_form }}
+                                <div class="text-danger" id="no_invoice_validation"></div>
+                            </div>
+                            <div class="mb-3 col-md-8">
+                                {{ invoice_client_form.label_tag }}
+                                {{ invoice_client_form }}
+                                <div class="text-danger" id="invoice_client_validation"></div>
+                            </div>
+                            <div class="mb-3 col-md-8">
+                                {{ invoice_date_form.label_tag }}
+								{{ invoice_date_form }}
+                                <div class="text-danger" id="invoice_date_validation"></div>
+							</div>
+                            <div class="mb-3 col-md-8">
+                                {{ invoice_due_form.label_tag }}
+								{{ invoice_due_form }}
+                                <div class="text-danger" id="invoice_due_date_validation"></div>
+							</div>
+                        </div>
+                    </form>
+                    <form id="form_add_product">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="mb-3 col-md-8">
+                                {{ clients_product_product_form.label_tag }}
+								{{ clients_product_product_form }}
+                                {{ clients_product_item_form }}
+                                <div class="row">
+                                    <div class="col-md-6 mt-2">
+                                        {{ clients_product_qty_form }}
+                                    </div>
+                                    <div class="col-md-6 mt-2">
+                                        {{ clients_product_price_form }}
+                                    </div>
+                                </div>
+							</div>
+                        </div>
+                        <button class="btn btn-main mb-3" id="btn_submit_product">Add product</button>
+                    </form>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="product_table" aria-hidden="true">
+                            <thead class="bg-main">
+                                <tr>
+                                    <th style="width:5%;">No.</th>
+                                    <th style="width:20%">Produk</th>
+                                    <th style="width:25%;">Item</th>
+                                    <th style="width:20%;">Price</th>
+                                    <th style="width:5%;">Qty</th>
+                                    <th style="width:20%;">Subtotal</th>
+                                    <th style="width:5%;"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="product_body_table">
+                            </tbody>
+                            <tfoot class="bg-main">
+                                <tr>
+                                    <td colspan="4" class="fw-bolder text-center">Total</td>
+                                    <td class="text-center" id="tf_total_qty"></td>
+                                    <td class="text-end price-format" style="border-right: none;" id="tf_total_subtotal"></td>
+                                    <td style="border-left: none;"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex gap-3 flex-wrap" id="next_step_btns">
+
+                        </div>
+                        <div class="d-flex gap-3 flex-wrap">
+                            <button class="btn btn-outline-success" id="btn_cancel">Cancel</button>
+                            <button class="btn btn-main" id="btn_submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block body_lib %}
+    <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
+    <script src="{% static 'js/datatables.js' %}"></script>
+    <script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
+    <script src="{% static 'js/add_invoice.js' %}"></script>
+{% endblock body_lib %}

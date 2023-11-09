@@ -1,0 +1,145 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block head_lib %}
+    <link rel="stylesheet" href="{% static 'css/light.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock head_lib %}
+
+{% block content %}
+<div class="container-fluid p-0">
+    <div class="col-12 d-none d-sm-block">
+        <h3><strong>Detail Invoice</strong></h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Library</a></li>
+                <li class="breadcrumb-item active">Data</li>
+            </ol>
+        </nav>
+        <hr style="border: 2px solid #1e8a97;">
+    </div>
+    <div class="row">
+        <div class="col-12 col-xl-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="fs-3 text-dark fw-bolder">Invoice No {{ no_invoice }}</h5>
+                </div>  
+                <div class="card-body">
+                    <div class="row">
+                        <div class="mb-3 col-md-8">
+                            {{ nama_client_form.label_tag }}
+                            {{ nama_client_form }}
+                        </div>
+                        <div class="mb-3 col-md-8">
+                            {{ date_form.label_tag }}
+                            {{ date_form }}
+                        </div>
+                        <div class="mb-3 col-md-8">
+                            {{ email_form.label_tag }}
+                            {{ email_form }}
+                        </div>
+                        <div class="mb-3 col-md-8">
+                            {{ subtotal_form.label_tag }}
+                            {{ subtotal_form }}
+                        </div>
+                    </div>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <h5 class="text-black fw-bolder mb-3">Payment</h5>
+                            <div class="mb-3 col-md-8">
+                                {{ payment_date_form.label_tag }}
+                                {{ payment_date_form }}
+                            </div>
+                            <div class="mb-3 col-md-8">
+                                <div class="d-flex justify-content-end">
+                                    <label for="file" class="form-label w-100">Bukti Pembayaran:
+                                        <div class="d-flex">
+                                            {{ payment_report_form }}
+                                            <span id="custom-msg" class="border border-2 d-flex align-items-center w-100">{{ placeholder }}</span>
+                                            <button type="button" class="rounded rounded-3" id="upload-button">Browse</button> 
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <div class="d-flex gap-3">
+                                    <a href="{% url 'invoices:print-invoice' id %}" target="_blank" class="btn btn-main">Preview Invoice</a>
+                                    <button class="btn btn-outline-success" id="previewTrigger" data-bs-toggle="modal" data-bs-target="#sizedModalMd" type="button">Preview File</button>
+                                    <button class="btn btn-success" id="btn_done">Lunas</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    
+					<div class="modal fade" id="sizedModalMd" tabindex="-1" role="dialog" aria-hidden="true">
+						<div class="modal-dialog modal-md" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+								    <h5 class="modal-title">File Payment</h5>
+								    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body m-3">
+                                    <img id="imagePreview" src="{{ file.clientspayment.payment_receipt.url }}" alt="Image Preview" style="display: none;" width="500" height="250">
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-main" data-bs-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+                    <table class="table" aria-hidden="true">
+                        <thead class="bg-main">
+                            <tr>
+                                <th style="border-right: 1px solid black;">No</th>
+                                <th style="border-right: 1px solid black;">Produk</th>
+                                <th style="border-right: 1px solid black;">Item</th>
+                                <th style="border-right: 1px solid black;">Price</th>
+                                <th style="border-right: 1px solid black;">Qty</th>
+                                <th style="border-right: 1px solid black;">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for data in list_views %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ data.product.nama_product }}</td>
+                                    <td>{{ data.item }}</td>
+                                    <td class="text-end">{{ data.price }}</td>
+                                    <td class="text-center price-format">{{ data.quantity }}</td>
+                                    <td class="text-end">{{ data.result }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot class="bg-main">
+                            <tr>
+                                <td colspan="4" class="fw-bolder text-center">Total</td>
+                                <td class="text-center" style="border-right: 1px solid black; border-left: 1px solid black;">{{ total_quantity|default_if_none:"0" }}</td>
+                                <td class="text-end" id="tf_total_subtotal">{{ total_subtotal|default_if_none:"0" }}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block body_lib %}
+    <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
+    <script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
+    <script src="{% static 'js/detail_history.js' %}"></script>
+    <script>
+        document.getElementById('previewTrigger').addEventListener('click', function() {
+            let imagePreview = document.getElementById('imagePreview');
+            imagePreview.style.display = 'block';
+        });
+    </script>
+{% endblock body_lib %}

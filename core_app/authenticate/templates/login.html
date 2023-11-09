@@ -1,0 +1,60 @@
+{% extends 'layouts/base_auth.html' %}
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block head_lib %}
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock head_lib %}
+
+
+{% block content %}
+<div class="container-fluid ps-md-0">
+    <div class="row g-0">
+      
+      <div class="col-md-6 col-lg-6">
+        <div class="login d-flex align-items-center py-5">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-9 col-lg-8 mx-auto">
+                <h3 class="fw-bolder mb-3 fs-1 text-center">Welcome to</h3>
+                <div class="d-flex justify-content-center">
+                    <img src="{% static 'img/icons/logo.svg' %}" class="mb-3" alt="BiBox-logo" width="150px">
+                </div>
+                <p class="text-center fw-bolder">please, login to start</p>
+                <!-- Sign In Form -->
+                {% if messages %}
+                  {% for message in messages %}
+                    <p class="text-danger text-center">{{ message }}</p>
+                  {% endfor %}
+                {% endif %}
+                <form method="POST">
+                  {% csrf_token %}
+                  <div class="form-floating mb-3">
+                    {{ form_username }}
+                    {{ form_username.label_tag }}
+                  </div>
+                  <div class="form-floating mb-3">
+                    {{ form_password }}
+                    {{ form_password.label_tag }}
+                  </div> 
+                  <div class="d-grid">
+                    <button class="btn btn-lg btn-main btn-login text-uppercase fw-bold mb-2" type="submit">Sign in</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-none d-md-flex bg-main col-md-6 col-lg-6 flex-column">
+        <p class="side-predesc mt-5 ms-5">jangan lupa untuk menagih invoice anda</p>
+        <h4 class="fw-bolder ms-5 fs-1 text-white">Let's manage your invoice</h4>
+        <h4 class="fw-bolder ps-5 fs-3 text-white">in one place</h4>
+        <div class="bg-image h-100"></div>
+      </div>
+    </div>
+</div>
+{% endblock content %}

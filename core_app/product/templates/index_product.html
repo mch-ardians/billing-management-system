@@ -1,0 +1,57 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block head_lib %}
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock head_lib %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <div class="col-12 d-none d-sm-block">
+            <h3><strong>Daftar Produk</strong></h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Library</a></li>
+                    <li class="breadcrumb-item active">Data</li>
+                </ol>
+            </nav>
+            <hr style="border: 2px solid #1e8a97;">
+        </div>
+        <div class="row">
+            <div class="col-12 col-xl-12">
+                <div class="d-flex justify-content-end">
+                    <a href="{% url 'products:store' %}" class="btn btn-main mb-3"><i data-feather="plus-square"></i></a>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="product_table" class="table table-striped" style="width:100%" aria-hidden="true">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Nama Produk</th>
+                                        <th>Type</th>
+                                        <th>Client</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block body_lib %}
+    <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
+    <script src="{% static 'js/datatables.js' %}"></script>
+    <script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
+    <script src="{% static 'js/index_product.js' %}"></script>
+{% endblock body_lib %}

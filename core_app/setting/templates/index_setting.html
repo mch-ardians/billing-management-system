@@ -1,0 +1,99 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block head_lib %}
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock head_lib %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <div class="col-12 d-none d-sm-block">
+            <h3><strong>Setting Notification</strong></h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Library</a></li>
+                    <li class="breadcrumb-item active">Data</li>
+                </ol>
+            </nav>
+            <hr style="border: 2px solid #1e8a97;">
+        </div>
+        <div class="row">
+            <div class="d-flex justify-content-end">
+                <a href="{% url 'settings:store' %}" class="btn btn-main mb-3"><i data-feather="plus-square"></i></a>
+            </div>
+            <div class="col-md-6">
+                <div class="card flex-fill">
+                    <div class="card-body d-flex">
+                        <div class="align-self-center w-100">
+                            <div class="chart">
+                                <div id="datetimepicker-dashboard"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0 fs-5">All Notification  <i class="fas fa-chevron-right fa-xs"></i></h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group overflow-auto" style="max-height: 310px;">
+                            {% for item in notif %}
+                                <div class="alert alert-light border rounded-3 alert-dismissible shadow-lg" role="alert">
+                                    <div class="alert-message">
+                                        <div class="d-flex align-items-center">
+                                            <div class="alert-icon rounded-circle bg-light">
+                                                <i class="far fa-fw fa-bell"></i>
+                                            </div>
+                                            <div class="alert-message">
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="fs-5 fw-bolder flex-grow-1">{{item.client.nama}}</div>
+                                                    <form id="form_switch_cron">
+                                                        {% csrf_token %}
+                                                        <div class="form-check form-switch d-flex justify-content-between">
+                                                            <input class="form-check-input" type="checkbox" id="switch_cron" value="{{ item.id }}" {% if item.status == "True" %}checked{% endif %}>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="fs-6 fw-lighter"><b>{{item.notif_time|time:"g:i A"}}</b></div>
+                                                <div class="fs-6 fw-lighter">{{item.notif_date|date:"d F Y"}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <a class="btn btn-main" href="{% url 'settings:update' item.id %}">Edit</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+{% endblock content %}
+
+{% block body_lib %}
+    <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
+    <script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
+    <script src="{% static 'js/index_setting.js' %}"></script>
+    <script>
+		document.addEventListener("DOMContentLoaded", function() {
+			var date = new Date(Date.now());
+			var defaultDate = date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate();
+			document.getElementById("datetimepicker-dashboard").flatpickr({
+				inline: true,
+				prevArrow: "<span class=\"fas fa-chevron-left\" title=\"Previous month\"></span>",
+				nextArrow: "<span class=\"fas fa-chevron-right\" title=\"Next month\"></span>",
+				defaultDate: defaultDate
+			});
+		});
+	</script>
+{% endblock body_lib %}

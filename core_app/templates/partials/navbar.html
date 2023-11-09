@@ -1,0 +1,35 @@
+{% load static %}
+<nav class="navbar navbar-expand navbar-light navbar-bg">
+    <a class="sidebar-toggle js-sidebar-toggle">
+        <i class="hamburger align-self-center"></i>
+    </a>
+
+    <div class="navbar-collapse collapse">
+        <ul class="navbar-nav navbar-align">
+            <li class="nav-item">
+                <a class="nav-icon js-fullscreen d-none d-lg-block" href="#">
+                    <div class="position-relative">
+                        <i class="align-middle" data-feather="maximize"></i>
+                    </div>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-icon pe-md-0 dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                    {% if profile_picture %}
+                        <img src="{{ profile_picture.url }}" class="avatar img-fluid rounded" alt="profile picture"/>
+                    {% else %}
+                        <img src="{% static 'img/icons/pngwing.com.png' %}" class="avatar img-fluid rounded" alt="profile picture"/>
+                    {% endif %}
+                </a>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <a class="dropdown-item" href="{% url 'profile:index' user.id %}"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <form method="POST" action="{% url 'authenticate:logout' %}">
+                        {% csrf_token %}
+                        <button class="dropdown-item" type="submit" name="logout" value="Submit">Log out</button>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

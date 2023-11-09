@@ -1,0 +1,79 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block head_lib %}
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock head_lib %}
+
+{% block content %}
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-12 d-none d-sm-block">
+                <h3><strong>Profile</strong></h3>
+                <hr style="border: 2px solid #1e8a97;">
+            </div>
+            <div class="mb-3 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4><strong>Avatar</strong></h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="form_profile" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="mb-3 col-md-8">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        {% if profile_picture %}
+                                            <img src="{{ foto_profile }}" class="img-fluid rounded-circle mb-2" width="128" height="128" alt="User Profile"/>
+                                        {% else %}
+                                            <img src="{% static 'img/icons/pngwing.com.png' %}" class="img-fluid rounded-circle mb-2" width="128" height="128" alt="user Profile" />
+                                        {% endif %}
+                                        <div id="trigger_container" class="col-md-4 d-flex justify-content-evenly gap-3 w-auto">
+                                            {{ profile_foto_form }}
+                                            {% if user.id %}
+                                                <button class="btn btn-main" id="btn_edit">Edit</button>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    {{ user_username_form.label_tag }}
+                                    {{ user_username_form }}
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    {{ profile_full_name_form.label_tag }}
+                                    {{ profile_full_name_form }}
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    {{ profile_position_form.label_tag }}
+                                    {{ profile_position_form }}
+                                </div>
+                                <div class="col-md-6"></div>
+                                <div class="mb-3 col-md-6">
+                                    {{ user_email_form.label_tag }}
+                                    {{ user_email_form }}
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    {{ profile_no_telp_form.label_tag }}
+                                    {{ profile_no_telp_form }}
+                                </div>
+                            </div>
+                            <div class="d-flex gap-3 justify-content-end" id="btn_actions">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block body_lib %}
+    <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
+    <script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
+    <script src="{% static 'js/index_profile.js' %}"></script>
+{% endblock body_lib %}

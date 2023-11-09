@@ -1,0 +1,100 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %}
+	{{ title }}
+{% endblock title %}
+
+{% block head_lib %}
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock head_lib %}
+
+{% block content %}
+<div class="container-fluid p-0">
+	<div class="col-12 d-none d-sm-block">
+		<h3><strong>Add Notification</strong></h3>
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+				<li class="breadcrumb-item"><a href="#">Library</a></li>
+				<li class="breadcrumb-item active">Data</li>
+			</ol>
+		</nav>
+	</div>
+	<div class="row">
+		<div class="col-12 col-xl-12">
+			<div class="card">
+				<div class="card-body">
+					<form id="form_add_setting">
+						{% csrf_token %}
+						<div class="row">
+							<div class="mb-3 col-md-6">
+								{{ notif_date_form.label }}
+								{{ notif_date_form }}
+							</div>
+							<div class="mb-3 col-md-6">
+								{{ notif_time_form.label }}
+                                {{ notif_time_form }}
+							</div>
+							<div class="mb-3 col-md-8">
+								{{ client_form.label }}
+								{{ client_form }}
+							</div>
+							<div class="mb-3 col-md-8">
+								{{ product_form.label }}
+								{{ product_form }}
+							</div>
+							<div class="mb-3 col-md-8">
+								{{ text_form.label }}
+								{{ text_form }}
+							</div>
+							<div class="mb-3 col-md-8">
+								<div class="form-label">Send to:</div>
+								<div class="input-group d-flex gap-3">
+									<div class="d-flex align-content-center col-md-6">
+										<div class="input-group-text bg-transparent" style="border: none;">
+											{{ checkbox_email_form }}
+										</div>
+										{{ email_check_form }}
+									</div>
+									<div class="d-flex align-content-center col-md-5">
+										<div class="input-group-text bg-transparent" style="border: none;">
+											{{ checkbox_telp_form }}
+										</div>
+										{{ telp_check_form }}
+									</div>
+								</div>
+							</div>						
+							<div class="mb-3">
+								<label class="form-check m-0">
+									{{ repeat_notif_form }}
+									<span class="form-check-label">{{ repeat_notif_form.label }}</span>
+								</label>
+							</div>
+							<div class="mb-3 col-md-8">
+								<div class="border p-3 rounded">
+									<div class="form-check form-switch form-check-reverse d-flex justify-content-between">
+                                        {{ status_form.label }}
+                                        {{ status_form }}
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mb-3 col-md-2 d-flex gap-3">
+							<button class="btn btn-outline-success" id="btn_cancel">Cancel</button>
+							<button class="btn btn-main" id="btn_submit">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}
+
+{% block body_lib %}
+	<script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
+	<script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
+	<script src="{% static 'js/add_setting.js' %}"></script>
+{% endblock body_lib %}

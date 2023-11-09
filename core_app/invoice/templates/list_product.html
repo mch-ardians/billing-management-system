@@ -1,0 +1,13 @@
+{% for data in list_views %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ data.product.nama_product }}</td>
+        <td>{{ data.item }}</td>
+        <td>{{ data.price }}</td>
+        <td class="text-center price-format">{{ data.quantity }}</td>
+        <td class="text-end" id="tb_subtotal">{{ data.result }}</td>
+        <td>
+            <button class="dropdown-item text-danger text-center" id="btn_delete_product" value="{{ data.id }}"><i data-feather="x-square"></i></button>
+        </td>
+    </tr>
+{% endfor %}
